@@ -5,6 +5,10 @@ cat Workbook2.csv | node out/src/index.js csv html > csv.html.txt
 cat Workbook2.prn | node out/src/index.js prn json > prn.json.txt
 cat Workbook2.prn | node out/src/index.js prn html > prn.html.txt
 
+diff csv.html.txt prn.html.txt
+diff csv.json.txt prn.json.txt
+
+
 
 # Data format translation program
 

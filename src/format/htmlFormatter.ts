@@ -15,8 +15,8 @@ export function toHTML(records: RecordData[]): string {
     return '<table><thead></thead><tbody></tbody></table>';
   }
 
-  const headers = Object.keys(records[0]);
-  //const headers = ['Name', 'Address', 'Postcode', 'Phone', 'Credit Limit', 'Birthday'];
+  //const headers = Object.keys(records[0]);
+  const headers = ['Name', 'Address', 'Postcode', 'Phone', 'Credit Limit', 'Birthday'];
 
   const rows = records.map(record =>
     `<tr>${headers.map(key => `<td>${escapeHTML(record[key])}</td>`).join('')}</tr>`

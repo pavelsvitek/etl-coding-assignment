@@ -5,14 +5,19 @@ export function normalizeRecords(records: RecordData[]): RecordData[] {
   return records.map(record => {
     const updated = { ...record };
 
-    // Normalize and overwrite the original field name
-    const creditRaw = record['Credit Limit'] || record.CreditLimit;
-    updated['Credit Limit'] = parseFloat(String(creditRaw).replace(/[^\d.-]/g, ''));
+    // Versuche beide Varianten abzugreifen
+    const raw = record['Credit Limit'] ?? record.CreditLimit ?? '';
+    let credit = parseFloat(String(raw).replace(/[^\d.-]/g, ''));
 
-    // Normalize birthday
+    // Falls der ursprüngliche Key "CreditLimit" war (PRN), umrechnen
+    const isPRN = record.hasOwnProperty('CreditLimit');
+
+    if (isPRN) {
+      credit = credit / 100;
+    }
+
+    updated['Credit Limit'] = credit;
     updated.Birthday = parseDate(String(record.Birthday));
-
-    // Optional: remove "CreditLimit" if present (from PRN parsing)
     delete (updated as any).CreditLimit;
 
     return updated;

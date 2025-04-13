@@ -4,13 +4,18 @@ exports.normalizeRecords = normalizeRecords;
 const parseDate_1 = require("./parseDate");
 function normalizeRecords(records) {
     return records.map(record => {
+        var _a, _b;
         const updated = Object.assign({}, record);
-        // Normalize and overwrite the original field name
-        const creditRaw = record['Credit Limit'] || record.CreditLimit;
-        updated['Credit Limit'] = parseFloat(String(creditRaw).replace(/[^\d.-]/g, ''));
-        // Normalize birthday
+        // Versuche beide Varianten abzugreifen
+        const raw = (_b = (_a = record['Credit Limit']) !== null && _a !== void 0 ? _a : record.CreditLimit) !== null && _b !== void 0 ? _b : '';
+        let credit = parseFloat(String(raw).replace(/[^\d.-]/g, ''));
+        // Falls der ursprüngliche Key "CreditLimit" war (PRN), umrechnen
+        const isPRN = record.hasOwnProperty('CreditLimit');
+        if (isPRN) {
+            credit = credit / 100;
+        }
+        updated['Credit Limit'] = credit;
         updated.Birthday = (0, parseDate_1.parseDate)(String(record.Birthday));
-        // Optional: remove "CreditLimit" if present (from PRN parsing)
         delete updated.CreditLimit;
         return updated;
     });
