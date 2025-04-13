@@ -1,4 +1,5 @@
 import { toHTML } from '../src/format/htmlFormatter';
+import { toJSON } from '../src/format/jsonFormatter';
 
 const mockData = [
   {
@@ -16,3 +17,11 @@ test('formats HTML correctly', () => {
   expect(output).toContain('<table>');
   expect(output).toContain('<td>123 Lane</td>');
 });
+
+
+test('formats JSON correctly', () => {
+    const output = toJSON(mockData);
+    expect(output).toContain('"Name": "Alice"');
+    expect(output).toContain('"CreditLimit": 1000');
+  });
+  
