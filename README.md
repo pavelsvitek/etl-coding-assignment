@@ -1,3 +1,11 @@
+#Executable commands
+cat Workbook2.csv | node out/src/index.js csv json > csv.json.txt
+cat Workbook2.csv | node out/src/index.js csv html > csv.html.txt
+
+cat Workbook2.prn | node out/src/index.js prn json > prn.json.txt
+cat Workbook2.prn | node out/src/index.js prn html > prn.html.txt
+
+
 # Data format translation program
 
 ## The task
